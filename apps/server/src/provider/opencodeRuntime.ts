@@ -810,14 +810,14 @@ const makeOpenCodeRuntime = Effect.gen(function* () {
       if (modelsResult.value.code !== 0) {
         const stderrDetail = modelsResult.value.stderr.trim();
         const stdoutDetail = modelsResult.value.stdout.trim();
-        const details: string[] = [
-          `OpenCode models command exited with code ${modelsResult.value.code}.`,
-          stderrDetail ? `stderr:\n${stderrDetail.slice(0, 2000)}` : null,
-          stdoutDetail ? `stdout:\n${stdoutDetail.slice(0, 2000)}` : null,
-        ].filter((entry): entry is string => entry !== null);
         return yield* new OpenCodeRuntimeError({
           operation: "loadInventoryFromCli",
-          detail: details.join("\n\n"),
+          detail: `OpenCode models command exited with code ${modelsResult.value.code} (stderr ${stderrDetail.length} chars, stdout ${stdoutDetail.length} chars).`,
+          cause: {
+            exitCode: modelsResult.value.code,
+            stdout: modelsResult.value.stdout,
+            stderr: modelsResult.value.stderr,
+          },
         });
       }
 
