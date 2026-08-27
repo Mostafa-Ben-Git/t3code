@@ -230,6 +230,10 @@
     "./claudeCompaction": {
       "types": "./src/claudeCompaction.ts",
       "import": "./src/claudeCompaction.ts"
+    },
+    "./stripTerminalEscapes": {
+      "types": "./src/stripTerminalEscapes.ts",
+      "import": "./src/stripTerminalEscapes.ts"
     }
   },
   "scripts": {
